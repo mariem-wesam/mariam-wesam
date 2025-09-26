@@ -11,7 +11,7 @@ string authors[MAX_BOOKS];
 int years[MAX_BOOKS];
 int bookCount = 0; // current number of books
 
-// Function to add a new book
+
 void addBook() {
     if (bookCount >= MAX_BOOKS) {
         cout << "Bookshelf is full. Cannot add more books.\n";
@@ -143,3 +143,4 @@ int main() {
 
     return 0;
 }
+
