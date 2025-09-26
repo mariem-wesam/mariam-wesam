@@ -1,0 +1,145 @@
+﻿#include <iostream>
+#include <string>
+using namespace std;
+
+
+const int MAX_BOOKS = 100;
+
+
+string titles[MAX_BOOKS];
+string authors[MAX_BOOKS];
+int years[MAX_BOOKS];
+int bookCount = 0; // current number of books
+
+// Function to add a new book
+void addBook() {
+    if (bookCount >= MAX_BOOKS) {
+        cout << "Bookshelf is full. Cannot add more books.\n";
+        return;
+    }
+
+    cin.ignore(); 
+    cout << "Enter book title: ";
+    getline(cin, titles[bookCount]);
+    cout << "Enter author: ";
+    getline(cin, authors[bookCount]);
+    cout << "Enter publication year: ";
+    cin >> years[bookCount];
+
+    bookCount++;
+    cout << "Book added successfully!\n";
+}
+
+
+void listBooks() {
+    if (bookCount == 0) {
+        cout << "Bookshelf is empty.\n";
+        return;
+    }
+
+    cout << "--- Bookshelf Contents ---\n";
+    for (int i = 0; i < bookCount; i++) {
+        cout << i + 1 << ". " << titles[i] << " by " 
+             << authors[i] << " (" << years[i] << ")\n";
+    }
+}
+
+
+void searchBook() {
+    if (bookCount == 0) {
+        cout << "Bookshelf is empty.\n";
+        return;
+    }
+
+    cin.ignore();
+    string searchTitle;
+    cout << "Enter the book title to search: ";
+    getline(cin, searchTitle);
+
+    for (int i = 0; i < bookCount; i++) {
+        if (titles[i] == searchTitle) {
+            cout << "Found: " << titles[i] << " by " 
+                 << authors[i] << " (" << years[i] << ")\n";
+            return;
+        }
+    }
+    cout << "Book not found.\n";
+}
+
+void deleteBook() {
+    if (bookCount == 0) {
+        cout << "Bookshelf is empty.\n";
+        return;
+    }
+
+    cin.ignore();
+    string deleteTitle;
+    cout << "Enter the book title to delete: ";
+    getline(cin, deleteTitle);
+
+    for (int i = 0; i < bookCount; i++) {
+        if (titles[i] == deleteTitle) {
+            // Shift all books left to fill the gap
+            for (int j = i; j < bookCount - 1; j++) {
+                titles[j] = titles[j + 1];
+                authors[j] = authors[j + 1];
+                years[j] = years[j + 1];
+            }
+            bookCount--;
+            cout << "Book deleted successfully!\n";
+            return;
+        }
+    }
+    cout << "Book not found.\n";
+}
+
+
+void countBooksByAuthor() {
+    if (bookCount == 0) {
+        cout << "Bookshelf is empty.\n";
+        return;
+    }
+
+    cin.ignore();
+    string searchAuthor;
+    cout << "Enter author's name: ";
+    getline(cin, searchAuthor);
+
+    int count = 0;
+    for (int i = 0; i < bookCount; i++) {
+        if (authors[i] == searchAuthor) {
+            count++;
+        }
+    }
+
+    cout << "Number of books by " << searchAuthor << ": " << count << endl;
+}
+
+
+int main() {
+    int choice;
+
+    do {
+        cout << "\n=== Digital Bookshelf Menu ===\n";
+        cout << "1. Add a new book\n";
+        cout << "2. List all books\n";
+        cout << "3. Search for a book by title\n";
+        cout << "4. Delete a book by title\n";
+        cout << "5. Count books by author\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addBook(); break;
+            case 2: listBooks(); break;
+            case 3: searchBook(); break;
+            case 4: deleteBook(); break;
+            case 5: countBooksByAuthor(); break;
+            case 6: cout << "Exiting program. Goodbye!\n"; break;
+            default: cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}
